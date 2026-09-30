@@ -44,16 +44,29 @@ flowchart LR
 ### Capability: release-notes
 
 #### Requirement: Generate release notes from source history
-The Release Manager agent SHALL generate draft release notes and a changelog for a release candidate from the Git log, merged PRs and linked tickets.
+The Release Manager agent SHALL generate draft release notes and a changelog for a release candidate from the Git log, merged PRs, linked JIRA tickets and linked Confluence pages.
+
+#### Requirement: Every note is traceable
+Every release note entry SHALL trace to at least one of: a commit SHA, a JIRA ticket ID, or a Confluence page link.
 
 ##### Scenario: Notes generated for a release branch
 - **GIVEN** a release branch with merged PRs since the previous release tag
 - **WHEN** the Release Manager agent is invoked with that branch
 - **THEN** it produces draft release notes and a changelog grouped by change type
-- **AND** every entry references at least one commit SHA or ticket ID
+- **AND** every entry carries at least one trace reference: a commit SHA, a JIRA ticket ID or a Confluence link
+
+##### Scenario: Entry traced only to Confluence
+- **GIVEN** a change described in a Confluence page (e.g. a design or release-planning page) linked from the release
+- **WHEN** the agent includes that change in the notes
+- **THEN** the entry cites the Confluence page link as its trace
+- **AND** the link resolves to an accessible page at generation time
+
+##### Scenario: Broken or unresolvable reference
+- **WHEN** a cited commit, JIRA ticket or Confluence link does not resolve
+- **THEN** the entry is treated as untraced
 
 ##### Scenario: No invented entries
-- **WHEN** the agent cannot trace a candidate entry to a commit or ticket
+- **WHEN** the agent cannot trace a candidate entry to a commit, JIRA ticket or Confluence link
 - **THEN** the entry is excluded from the notes and listed in an "untraced" section for human review
 
 #### Requirement: Human sign-off on customer-facing wording

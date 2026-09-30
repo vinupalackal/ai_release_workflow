@@ -56,7 +56,7 @@ Each row below is intended to become one OpenSpec capability with its own requir
 
 | Capability | Owner agent | Inputs | Outputs | Key requirement (draft) |
 | --- | --- | --- | --- | --- |
-| `release-notes` | Release Manager | Git log, merged PRs, Jira tickets | Release notes, changelog | Every note traces to a commit or ticket; no invented entries |
+| `release-notes` | Release Manager | Git log, merged PRs, JIRA tickets, Confluence pages | Release notes, changelog | Every note traces to a commit, JIRA ticket or Confluence link; no invented entries |
 | `version-bump` | Release Manager | Commit types, API diff | Suggested semver bump | Suggests only; a human or policy confirms |
 | `breaking-change-detection` | Release Manager | API/ABI diff vs last release | Flagged breaking changes | A flagged break forces a major bump or an explicit waiver |
 | `pre-release-audit` | Release Manager | Target branch or PR, Jira, CI results | Audit trail, checklist status | Missing test, doc or compliance item blocks the gate |
